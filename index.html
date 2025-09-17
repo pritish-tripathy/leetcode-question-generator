@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Random Message Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .message-container {
+      width: 100%;
+      max-width: 500px;
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 6px;
+      background: #ffffff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .message-container label {
+      display: flex;
+      align-items: center;
+      margin-right: 10px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .message-container input[type="checkbox"] {
+      margin-right: 5px;
+      transform: scale(1.2);
+    }
+
+    .message-text {
+      color: #444;
+      font-size: 16px;
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+  <h1>Leetcode Problem Generator</h1>
+  <button onclick="generateMessage()">Generate</button>
+  <div id="messages"></div>
+
+  <script>
+    // Your JS message library
+    const messageLibrary = [
+      "Leetcode #9 - Palindrome Number",
+      "Leetcode #7 - Reverse Number",
+      "Leetcode #35 - Search Insert Position",
+      "Leetcode #66 - Plus One",
+      "Leetcode #69 - Sqrt(x)",
+      "Leetcode #74 - Search 2D Matrix",
+      "Leetcode #172 - Factorial Trailing Zeroes",
+      "Leetcode #342 - Power of Four",
+      "Leetcode #240 - Search 2D Matrix II",
+      "Leetcode #509 - Fibonacci Number",
+      "Leetcode #278 - First Bad Version"
+    ];
+
+    // Track solved messages
+    let solvedMessages = new Set();
+
+    function generateMessage() {
+      // Filter out solved messages
+      const availableMessages = messageLibrary.filter(msg => !solvedMessages.has(msg));
+
+      if (availableMessages.length === 0) {
+        alert("All messages are solved!");
+        return;
+      }
+
+      const randomIndex = Math.floor(Math.random() * availableMessages.length);
+      const randomMessage = availableMessages[randomIndex];
+
+      const messageContainer = document.createElement("div");
+      messageContainer.className = "message-container";
+
+      const label = document.createElement("label");
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+
+      // Mark as solved if checked
+      checkbox.addEventListener("change", () => {
+        if (checkbox.checked) {
+          solvedMessages.add(randomMessage);
+        } else {
+          solvedMessages.delete(randomMessage);
+        }
+      });
+
+      label.appendChild(checkbox);
+      label.appendChild(document.createTextNode("Solved"));
+
+      const messageText = document.createElement("span");
+      messageText.className = "message-text";
+      messageText.textContent = randomMessage;
+
+      messageContainer.appendChild(label);
+      messageContainer.appendChild(messageText);
+
+      document.getElementById("messages").appendChild(messageContainer);
+    }
+  </script>
+</body>
+</html>
